@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Lato', sans-serif;
+  overflow: hidden;
+  text-align: center;
+}
+
+#bg {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.75);
+}
+
+#logo {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+}
+
+#text,
+#text2 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  font-size: 35px;
+  color: white;
+  text-shadow: 3px 3px black;
+
+  white-space: pre;
+}
+
+#author,
+#author2 {
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  font-size: 35px;
+  color: darkgray;
+  text-shadow: 2px 2px 4px black;
+
+  white-space: pre;
+}
+
+#new-quote {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.fadeOut {
+  animation: fadeOut 2s ease;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    filter: brightness(0.75);
+  }
+
+  50% {
+    filter: brightness(0);
+  }
+
+  100% {
+    filter: brightness(0.75);
+  }
+}
+
+.previous {
+  animation: previous 2s ease;
+  animation-fill-mode: forwards;
+}
+
+@keyframes previous {
+  from {
+    left: 50%;
+    opacity: 1;
+  }
+
+  to {
+    left: 0%;
+    opacity: 0;
+    text-shadow: none;
+  }
+}
+
+.next {
+  animation: next 2s ease;
+}
+
+@keyframes next {
+  from {
+    left: 100%;
+    opacity: 0;
+    text-shadow: none;
+  }
+
+  to {
+    left: 50%;
+    opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  #logo {
+    width: 400px;
+  }
+
+  #text,
+  #text2 {
+    font-size: 20px;
+  }
+
+  #author,
+  #author2 {
+    font-size: 25px;
+  }
+}
