@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 function RandomQuoteMachine() {
-  const [data, setData] = React.useState([]);
+  const [data, setData] = React.useState('');
   const [anim, setAnim] = React.useState([false, [{}, {}]]);
   const [currentData, setCurrentData] = React.useState({});
 
@@ -60,47 +60,55 @@ function RandomQuoteMachine() {
     // === END TRANSITION === \\
   };
 
-  return (
-    <>
-      <img
-        src={currentData.image}
-        alt="background"
-        id="bg"
-        className={anim[0] ? 'fadeOut' : null}
-      />
-      <img src={'https://i.ibb.co/RbzX8sn/got.png'} alt="" id="logo" />
+  if (!data) return <></>;
+  else
+    return (
+      <>
+        <img
+          src={currentData.image}
+          alt="background"
+          id="bg"
+          className={anim[0] ? 'fadeOut' : null}
+        />
+        <img src={'https://i.ibb.co/RbzX8sn/got.png'} alt="" id="logo" />
 
-      <div id="quote-box">
-        <p id="text" className={anim[0] ? 'next' : null}>{`"${
-          anim[1][0].quote
-        }"`}</p>
-        <p id="author" className={anim[0] ? 'next' : null}>{`-${
-          anim[1][0].author
-        }`}</p>
+        <div id="quote-box">
+          <p id="text" className={anim[0] ? 'next' : null}>{`"${
+            anim[1][0].quote
+          }"`}</p>
+          <p id="author" className={anim[0] ? 'next' : null}>{`-${
+            anim[1][0].author
+          }`}</p>
 
-        {anim[0] && (
-          <div>
-            <p id="text2" className={anim[0] ? 'previous' : null}>{`"${
-              anim[1][1].quote
-            }"`}</p>
-            <p id="author2" className={anim[0] ? 'previous' : null}>{`-${
-              anim[1][1].author
-            }`}</p>
-          </div>
-        )}
+          {anim[0] && (
+            <div>
+              <p id="text2" className={anim[0] ? 'previous' : null}>{`"${
+                anim[1][1].quote
+              }"`}</p>
+              <p id="author2" className={anim[0] ? 'previous' : null}>{`-${
+                anim[1][1].author
+              }`}</p>
+            </div>
+          )}
 
-        <button id="new-quote" onClick={handleNextQuote}>
-          Next Quote
-        </button>
+          <button id="new-quote" onClick={handleNextQuote}>
+            Next Quote
+          </button>
 
-        <button id="tweet-button">
-          <a id="tweet-quote" href="twitter.com/intent/tweet">
-            Tweet Quote
-          </a>
-        </button>
-      </div>
-    </>
-  );
+          <button id="tweet-button">
+            <a
+              href={`https://twitter.com/intent/tweet?hashtags=quotes&related=freecodecamp&text="${
+                anim[1][0].quote
+              }" -${anim[1][0].author}`}
+              id="tweet-quote"
+              target="_blank"
+            >
+              Tweet Quote
+            </a>
+          </button>
+        </div>
+      </>
+    );
 }
 
 ReactDOM.render(<RandomQuoteMachine />, document.getElementById('root'));
