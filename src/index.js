@@ -1,142 +1,63 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-
 import './index.css';
-import img_logo from './assets/got.png';
-import img_cersei from './assets/cersei.jpg';
-import img_tyrion from './assets/tyrion.jpg';
-import img_ygritte from './assets/ygritte.jpg';
-import img_syrio from './assets/syrio.jpg';
-import img_peter from './assets/peter.jpg';
-import img_daenerys from './assets/daenerys.jpg';
-import img_jon from './assets/jon.jpg';
 
-const RandomQuoteMachine = () => {
-  const [data, setData] = useState([
-    {
-      quote: 'You Know Nothing, Jon Snow.',
-      author: 'Ygritte',
-      image: img_ygritte,
-      active: true
-    },
-    {
-      quote:
-        'Never forget what you are.\nThe rest of the world will not.\nWear it like armor, and it can \nnever be used to hurt you.',
-      author: 'Tyrion Lannister',
-      image: img_tyrion,
-      active: true
-    },
-    {
-      quote: 'There is only one thing we say to death:\nNot today!',
-      author: 'Syrio Forel',
-      image: img_syrio,
-      active: true
-    },
-    {
-      quote: "What we don't know is\nwhat usually get us killed.",
-      author: 'Peter Baelish',
-      image: img_peter,
-      active: true
-    },
-    {
-      quote:
-        'When you play the game of\nthrones, you win or you die.\nThere is no middle ground.',
-      author: 'Cersei Lannister',
-      image: img_cersei,
-      active: true
-    },
-    {
-      quote:
-        'I’m not going to stop the wheel...\n...I’m going to break the wheel.',
-      author: 'Daenerys Targaryen',
-      image: img_daenerys,
-      active: true
-    },
-    {
-      quote:
-        'When enough people make false\npromises, words stop meaning anything.\nThen there are no more answers,\nonly better and better lies.',
-      author: 'Jon Snow',
-      image: img_jon,
-      active: true
-    }
-  ]);
+function RandomQuoteMachine() {
+  const [data, setData] = React.useState([]);
+  const [anim, setAnim] = React.useState([false, [{}, {}]]);
+  const [currentData, setCurrentData] = React.useState({});
 
-  const [currentData, setCurrentData] = useState({});
-  const [init, setInit] = useState(false);
-  const [anim, setAnim] = useState([false, [{}, {}]]);
-
-  useEffect(() => {
-    handleNextQuote();
+  React.useEffect(() => {
+    (async () => {
+      const response = await fetch(
+        'https://raw.githubusercontent.com/ChristianVillamin/test-author/master/authors.json'
+      );
+      const data = await response.json();
+      const selected = getRandom(data);
+      const nextAnim = [...anim];
+      nextAnim[1][0].quote = selected.quote;
+      nextAnim[1][0].author = selected.author;
+      setCurrentData(Object.assign({}, selected));
+      setAnim(nextAnim);
+    })();
   }, []);
 
-  const handleNextQuote = () => {
+  const getRandom = data => {
     const dataCopy = [...data];
     const dataFilter = dataCopy.filter(data => data.active);
     const dataRandom = Math.floor(Math.random() * dataFilter.length);
     const dataSelected = dataFilter[dataRandom];
+
     dataSelected.active = false;
-    if (dataFilter.length === 1) dataCopy.forEach(item => (item.active = true));
-
+    dataFilter.length === 1 && dataCopy.forEach(item => (item.active = true));
     setData(dataCopy);
+    return dataSelected;
+  };
 
-    if (!init) {
-      const nextAnim = [...anim];
-      nextAnim[1][0].quote = dataSelected.quote;
-      nextAnim[1][0].author = dataSelected.author;
-      setCurrentData(Object.assign({}, dataSelected));
-      setAnim(nextAnim);
-      setInit(true);
-      return;
-    }
+  const handleNextQuote = () => {
+    // === GET RANDOM === \\
+    const selected = getRandom(data);
 
-    // Transition
+    // === START TRANSITION === \\
+    //-Background
+    setTimeout(() => setCurrentData(Object.assign({}, selected)), 1000);
+
+    //-Quote & Author
     let newAnim = [...anim];
-
     newAnim[0] = true;
-
-    // Background
-    setTimeout(() => {
-      setCurrentData(Object.assign({}, dataSelected));
-    }, 1000);
-
-    // Quote & Author
-    newAnim[1][0] = {
-      quote: dataSelected.quote,
-      author: dataSelected.author,
-      animQuote: 'next',
-      animAuthor: 'next'
-    };
-
-    newAnim[1][1] = {
-      quote: currentData.quote,
-      author: currentData.author,
-      animQuote: 'previous',
-      animAuthor: 'previous'
-    };
-
+    newAnim[1][0].quote = selected.quote;
+    newAnim[1][0].author = selected.author;
+    newAnim[1][1].quote = currentData.quote;
+    newAnim[1][1].author = currentData.author;
     setAnim(newAnim);
 
-    // Reset
+    //-Reset
     setTimeout(() => {
       newAnim = [...anim];
-      newAnim[1][0] = {
-        quote: newAnim[1][0].quote,
-        author: newAnim[1][0].author,
-        animQuote: '',
-        animAuthor: ''
-      };
-
-      newAnim[1][1] = {
-        quote: newAnim[1][1].quote,
-        author: newAnim[1][1].author,
-        animQuote: '',
-        animAuthor: ''
-      };
-
       newAnim[0] = false;
-
       setAnim(newAnim);
     }, 2000);
+    // === END TRANSITION === \\
   };
 
   return (
@@ -147,37 +68,39 @@ const RandomQuoteMachine = () => {
         id="bg"
         className={anim[0] ? 'fadeOut' : null}
       />
-      <img src={img_logo} alt="" id="logo" />
+      <img src={'https://i.ibb.co/RbzX8sn/got.png'} alt="" id="logo" />
 
       <div id="quote-box">
-        <p id="text" className={anim[1][0].animQuote}>{`"${
+        <p id="text" className={anim[0] ? 'next' : null}>{`"${
           anim[1][0].quote
         }"`}</p>
-        <p id="author" className={anim[1][0].animAuthor}>{`-${
+        <p id="author" className={anim[0] ? 'next' : null}>{`-${
           anim[1][0].author
         }`}</p>
 
         {anim[0] && (
           <div>
-            <p id="text2" className={anim[1][1].animQuote}>{`"${
+            <p id="text2" className={anim[0] ? 'previous' : null}>{`"${
               anim[1][1].quote
             }"`}</p>
-            <p id="author2" className={anim[1][1].animAuthor}>{`-${
+            <p id="author2" className={anim[0] ? 'previous' : null}>{`-${
               anim[1][1].author
             }`}</p>
           </div>
         )}
 
-        <button id="new-quote" onClick={handleNextQuote} disabled={anim[0]}>
+        <button id="new-quote" onClick={handleNextQuote}>
           Next Quote
         </button>
 
-        <a id="tweet-quote" href="twitter.com/intent/tweet">
-          Tweet
-        </a>
+        <button id="tweet-button">
+          <a id="tweet-quote" href="twitter.com/intent/tweet">
+            Tweet Quote
+          </a>
+        </button>
       </div>
     </>
   );
-};
+}
 
 ReactDOM.render(<RandomQuoteMachine />, document.getElementById('root'));

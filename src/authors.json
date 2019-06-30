@@ -1,0 +1,50 @@
+[
+  {
+    "quote": "You Know Nothing, Jon Snow.",
+    "author": "Ygritte",
+    "image": "https://i.ibb.co/zVpsP71/ygritte.jpg",
+    "active": true
+  },
+  {
+    "quote": "Never forget what you are.\nThe rest of the world will not.\nWear it like armor, and it can \nnever be used to hurt you.",
+    "author": "Tyrion Lannister",
+    "image": "https://i.ibb.co/BLXSTvk/tyrion.jpg",
+    "active": true
+  },
+  {
+    "quote": "There is only one thing we say to death:\nNot today!",
+    "author": "Syrio Forel",
+    "image": "https://i.ibb.co/TvvLZQf/syrio.jpg",
+    "active": true
+  },
+  {
+    "quote": "What we don't know is\nwhat usually get us killed.",
+    "author": "Peter Baelish",
+    "image": "https://i.ibb.co/Q87sMSY/peter.jpg",
+    "active": true
+  },
+  {
+    "quote": "When you play the game of\nthrones, you win or you die.\nThere is no middle ground.",
+    "author": "Cersei Lannister",
+    "image": "https://i.ibb.co/F7CWMq6/cersei.jpg",
+    "active": true
+  },
+  {
+    "quote": "I’m not going to stop the wheel...\n...I’m going to break the wheel.",
+    "author": "Daenerys Targaryen",
+    "image": "https://i.ibb.co/b2NtpKd/daenerys.jpg",
+    "active": true
+  },
+  {
+    "quote": "When enough people make false\npromises, words stop meaning anything.\nThen there are no more answers,\nonly better and better lies.",
+    "author": "Jon Snow",
+    "image": "https://i.ibb.co/BjX3fKP/jon.jpg",
+    "active": true
+  },
+  {
+    "quote": "When the snows fall and\nthe white winds blow, the lone wolf dies,\nbut the pack survives.",
+    "author": "Sansa Stark",
+    "image": "https://i.ibb.co/5K0Gg9d/sansa.jpg",
+    "active": true
+  }
+]

@@ -22,7 +22,7 @@
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 600px;
+  width: 625px;
 }
 
 #text,
@@ -30,7 +30,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
 
   font-size: 35px;
   color: white;
@@ -44,7 +44,7 @@
   position: absolute;
   top: 75%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
 
   font-size: 35px;
   color: darkgray;
@@ -56,8 +56,20 @@
 #new-quote {
   position: absolute;
   bottom: 10%;
-  left: 50%;
+  left: 45%;
   transform: translateX(-50%);
+}
+
+#tweet-button {
+  position: absolute;
+  bottom: 10%;
+  left: 55%;
+  transform: translateX(-50%);
+}
+
+a {
+  color: black;
+  text-decoration: none;
 }
 
 .fadeOut {
@@ -114,14 +126,21 @@
   }
 }
 
+@media only screen and (max-width: 900px) {
+  #logo {
+    width: 525px;
+  }
+}
+
 @media only screen and (max-width: 600px) {
   #logo {
-    width: 400px;
+    width: 350px;
   }
 
   #text,
   #text2 {
     font-size: 20px;
+    text-shadow: 2px 2px black;
   }
 
   #author,
