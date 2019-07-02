@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-function RandomQuoteMachine() {
+const RandomQuoteMachine = () => {
   const [data, setData] = React.useState('');
   const [anim, setAnim] = React.useState([false, [{}, {}]]);
   const [currentData, setCurrentData] = React.useState({});
@@ -73,25 +73,13 @@ function RandomQuoteMachine() {
         <img src={'https://i.ibb.co/RbzX8sn/got.png'} alt="" id="logo" />
 
         <div id="quote-box">
-          <p id="text" className={anim[0] ? 'next' : null}>{`"${
-            anim[1][0].quote
-          }"`}</p>
-          <p id="author" className={anim[0] ? 'next' : null}>{`-${
-            anim[1][0].author
-          }`}</p>
+          <Quotes animate={[anim[0], 'next']} quotes={anim[1][0]} />
 
           {anim[0] && (
-            <div>
-              <p id="text2" className={anim[0] ? 'previous' : null}>{`"${
-                anim[1][1].quote
-              }"`}</p>
-              <p id="author2" className={anim[0] ? 'previous' : null}>{`-${
-                anim[1][1].author
-              }`}</p>
-            </div>
+            <Quotes animate={[anim[0], 'previous']} quotes={anim[1][1]} />
           )}
 
-          <button id="new-quote" onClick={handleNextQuote}>
+          <button id="new-quote" onClick={handleNextQuote} disabled={anim[0]}>
             Next Quote
           </button>
 
@@ -109,6 +97,19 @@ function RandomQuoteMachine() {
         </div>
       </>
     );
-}
+};
+
+const Quotes = ({ animate, quotes }) => {
+  return (
+    <>
+      <p id="text" className={animate[0] ? animate[1] : null}>{`"${
+        quotes.quote
+      }"`}</p>
+      <p id="author" className={animate[0] ? animate[1] : null}>{`-${
+        quotes.author
+      }`}</p>
+    </>
+  );
+};
 
 ReactDOM.render(<RandomQuoteMachine />, document.getElementById('root'));
